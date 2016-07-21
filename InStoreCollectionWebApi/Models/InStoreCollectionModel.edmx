@@ -1,0 +1,718 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="InStoreCollectionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CollectionPoint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Latitiude" Type="float" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeviceInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Model" Type="nvarchar(max)" />
+          <Property Name="Platform" Type="nvarchar(max)" />
+          <Property Name="UUID" Type="nvarchar(max)" />
+          <Property Name="Version" Type="nvarchar(max)" />
+          <Property Name="Token" Type="nvarchar(max)" />
+          <Property Name="AppVersion" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Parcel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ParcelGroupId" Type="int" Nullable="false" />
+          <Property Name="DateScannedIntoStore" Type="datetime" />
+          <Property Name="DateCollectedByCustomer" Type="datetime" />
+          <Property Name="DateReturnedToStore" Type="datetime" />
+          <Property Name="TrackingNumber" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CollectionType" Type="nvarchar" MaxLength="15" />
+          <Property Name="DocumentType" Type="nvarchar" MaxLength="15" />
+          <Property Name="DocumentNumber" Type="nvarchar" MaxLength="13" />
+          <Property Name="ParcelNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParcelGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CollectionPointId" Type="int" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="PersonName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="PersonPhone" Type="nchar" MaxLength="11" />
+          <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="AgeInHours" Type="numeric" Precision="17" Scale="6" StoreGeneratedPattern="Computed" />
+          <Property Name="IsMobilePhoneNumber" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="Pin" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="CustomerReference" Type="nvarchar" MaxLength="255" />
+          <Property Name="ParcelCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="CollectionPointId" Type="int" />
+        </EntityType>
+        <EntityType Name="ShopRegistration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ContactPerson" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Latitiude" Type="float" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="ShopId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StoreGroupId" Type="int" Nullable="false" />
+          <Property Name="StoreCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="CollectionPointId" Type="int" />
+        </EntityType>
+        <EntityType Name="StoreGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StoreGroupCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoreRegistration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StoreId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ParcelGroup_CollectionPoint">
+          <End Role="CollectionPoint" Type="Self.CollectionPoint" Multiplicity="1" />
+          <End Role="ParcelGroup" Type="Self.ParcelGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPoint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParcelGroup">
+              <PropertyRef Name="CollectionPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parcels_ParcelGroup">
+          <End Role="ParcelGroup" Type="Self.ParcelGroup" Multiplicity="1" />
+          <End Role="Parcel" Type="Self.Parcel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParcelGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parcel">
+              <PropertyRef Name="ParcelGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_CollectionPoint">
+          <End Role="CollectionPoint" Type="Self.CollectionPoint" Multiplicity="0..1" />
+          <End Role="Shop" Type="Self.Shop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPoint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shop">
+              <PropertyRef Name="CollectionPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopRegistration_DeviceInfo">
+          <End Role="DeviceInfo" Type="Self.DeviceInfo" Multiplicity="1" />
+          <End Role="ShopRegistration" Type="Self.ShopRegistration" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShopRegistration">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopRegistration_Shop">
+          <End Role="Shop" Type="Self.Shop" Multiplicity="1" />
+          <End Role="ShopRegistration" Type="Self.ShopRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShopRegistration">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Store_CollectionPoint">
+          <End Role="CollectionPoint" Type="Self.CollectionPoint" Multiplicity="0..1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPoint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="CollectionPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Store_StoreGroup">
+          <End Role="StoreGroup" Type="Self.StoreGroup" Multiplicity="1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoreGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="StoreGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoreRegistration_DeviceInfo">
+          <End Role="DeviceInfo" Type="Self.DeviceInfo" Multiplicity="1" />
+          <End Role="StoreRegistration" Type="Self.StoreRegistration" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StoreRegistration">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoreRegistration_Store">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="StoreRegistration" Type="Self.StoreRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StoreRegistration">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InStoreCollectionModelStoreContainer">
+          <EntitySet Name="CollectionPoint" EntityType="Self.CollectionPoint" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceInfo" EntityType="Self.DeviceInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parcel" EntityType="Self.Parcel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParcelGroup" EntityType="Self.ParcelGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shop" EntityType="Self.Shop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShopRegistration" EntityType="Self.ShopRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoreGroup" EntityType="Self.StoreGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoreRegistration" EntityType="Self.StoreRegistration" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ParcelGroup_CollectionPoint" Association="Self.FK_ParcelGroup_CollectionPoint">
+            <End Role="CollectionPoint" EntitySet="CollectionPoint" />
+            <End Role="ParcelGroup" EntitySet="ParcelGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parcels_ParcelGroup" Association="Self.FK_Parcels_ParcelGroup">
+            <End Role="ParcelGroup" EntitySet="ParcelGroup" />
+            <End Role="Parcel" EntitySet="Parcel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_CollectionPoint" Association="Self.FK_Shop_CollectionPoint">
+            <End Role="CollectionPoint" EntitySet="CollectionPoint" />
+            <End Role="Shop" EntitySet="Shop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopRegistration_DeviceInfo" Association="Self.FK_ShopRegistration_DeviceInfo">
+            <End Role="DeviceInfo" EntitySet="DeviceInfo" />
+            <End Role="ShopRegistration" EntitySet="ShopRegistration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopRegistration_Shop" Association="Self.FK_ShopRegistration_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="ShopRegistration" EntitySet="ShopRegistration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Store_CollectionPoint" Association="Self.FK_Store_CollectionPoint">
+            <End Role="CollectionPoint" EntitySet="CollectionPoint" />
+            <End Role="Store" EntitySet="Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Store_StoreGroup" Association="Self.FK_Store_StoreGroup">
+            <End Role="StoreGroup" EntitySet="StoreGroup" />
+            <End Role="Store" EntitySet="Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoreRegistration_DeviceInfo" Association="Self.FK_StoreRegistration_DeviceInfo">
+            <End Role="DeviceInfo" EntitySet="DeviceInfo" />
+            <End Role="StoreRegistration" EntitySet="StoreRegistration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoreRegistration_Store" Association="Self.FK_StoreRegistration_Store">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="StoreRegistration" EntitySet="StoreRegistration" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InStoreCollectionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CollectionPoint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Latitiude" Type="Double" Nullable="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ParcelGroups" Relationship="Self.FK_ParcelGroup_CollectionPoint" FromRole="CollectionPoint" ToRole="ParcelGroup" />
+          <NavigationProperty Name="Shops" Relationship="Self.FK_Shop_CollectionPoint" FromRole="CollectionPoint" ToRole="Shop" />
+          <NavigationProperty Name="Stores" Relationship="Self.FK_Store_CollectionPoint" FromRole="CollectionPoint" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="DeviceInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Model" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Platform" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UUID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Version" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AppVersion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ShopRegistration" Relationship="Self.FK_ShopRegistration_DeviceInfo" FromRole="DeviceInfo" ToRole="ShopRegistration" />
+          <NavigationProperty Name="StoreRegistration" Relationship="Self.FK_StoreRegistration_DeviceInfo" FromRole="DeviceInfo" ToRole="StoreRegistration" />
+        </EntityType>
+        <EntityType Name="Parcel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ParcelGroupId" Type="Int32" Nullable="false" />
+          <Property Name="DateScannedIntoStore" Type="DateTime" Precision="3" />
+          <Property Name="DateCollectedByCustomer" Type="DateTime" Precision="3" />
+          <Property Name="DateReturnedToStore" Type="DateTime" Precision="3" />
+          <Property Name="TrackingNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CollectionType" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentType" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="ParcelNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ParcelGroup" Relationship="Self.FK_Parcels_ParcelGroup" FromRole="Parcel" ToRole="ParcelGroup" />
+        </EntityType>
+        <EntityType Name="ParcelGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CollectionPointId" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PersonName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PersonPhone" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AgeInHours" Type="Decimal" Precision="17" Scale="6" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="IsMobilePhoneNumber" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Pin" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CustomerReference" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ParcelCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CollectionPoint" Relationship="Self.FK_ParcelGroup_CollectionPoint" FromRole="ParcelGroup" ToRole="CollectionPoint" />
+          <NavigationProperty Name="Parcels" Relationship="Self.FK_Parcels_ParcelGroup" FromRole="ParcelGroup" ToRole="Parcel" />
+        </EntityType>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="CollectionPointId" Type="Int32" />
+          <NavigationProperty Name="CollectionPoint" Relationship="Self.FK_Shop_CollectionPoint" FromRole="Shop" ToRole="CollectionPoint" />
+          <NavigationProperty Name="ShopRegistrations" Relationship="Self.FK_ShopRegistration_Shop" FromRole="Shop" ToRole="ShopRegistration" />
+        </EntityType>
+        <EntityType Name="ShopRegistration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactPerson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Latitiude" Type="Double" Nullable="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="ShopId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DeviceInfo" Relationship="Self.FK_ShopRegistration_DeviceInfo" FromRole="ShopRegistration" ToRole="DeviceInfo" />
+          <NavigationProperty Name="Shop" Relationship="Self.FK_ShopRegistration_Shop" FromRole="ShopRegistration" ToRole="Shop" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StoreGroupId" Type="Int32" Nullable="false" />
+          <Property Name="StoreCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="CollectionPointId" Type="Int32" />
+          <NavigationProperty Name="CollectionPoint" Relationship="Self.FK_Store_CollectionPoint" FromRole="Store" ToRole="CollectionPoint" />
+          <NavigationProperty Name="StoreGroup" Relationship="Self.FK_Store_StoreGroup" FromRole="Store" ToRole="StoreGroup" />
+          <NavigationProperty Name="StoreRegistrations" Relationship="Self.FK_StoreRegistration_Store" FromRole="Store" ToRole="StoreRegistration" />
+        </EntityType>
+        <EntityType Name="StoreGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StoreGroupCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Stores" Relationship="Self.FK_Store_StoreGroup" FromRole="StoreGroup" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="StoreRegistration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DeviceInfo" Relationship="Self.FK_StoreRegistration_DeviceInfo" FromRole="StoreRegistration" ToRole="DeviceInfo" />
+          <NavigationProperty Name="Store" Relationship="Self.FK_StoreRegistration_Store" FromRole="StoreRegistration" ToRole="Store" />
+        </EntityType>
+        <Association Name="FK_ParcelGroup_CollectionPoint">
+          <End Role="CollectionPoint" Type="Self.CollectionPoint" Multiplicity="1" />
+          <End Role="ParcelGroup" Type="Self.ParcelGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPoint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParcelGroup">
+              <PropertyRef Name="CollectionPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_CollectionPoint">
+          <End Role="CollectionPoint" Type="Self.CollectionPoint" Multiplicity="0..1" />
+          <End Role="Shop" Type="Self.Shop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPoint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shop">
+              <PropertyRef Name="CollectionPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Store_CollectionPoint">
+          <End Role="CollectionPoint" Type="Self.CollectionPoint" Multiplicity="0..1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPoint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="CollectionPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopRegistration_DeviceInfo">
+          <End Role="DeviceInfo" Type="Self.DeviceInfo" Multiplicity="1" />
+          <End Role="ShopRegistration" Type="Self.ShopRegistration" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShopRegistration">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoreRegistration_DeviceInfo">
+          <End Role="DeviceInfo" Type="Self.DeviceInfo" Multiplicity="1" />
+          <End Role="StoreRegistration" Type="Self.StoreRegistration" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StoreRegistration">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parcels_ParcelGroup">
+          <End Role="ParcelGroup" Type="Self.ParcelGroup" Multiplicity="1" />
+          <End Role="Parcel" Type="Self.Parcel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParcelGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parcel">
+              <PropertyRef Name="ParcelGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopRegistration_Shop">
+          <End Role="Shop" Type="Self.Shop" Multiplicity="1" />
+          <End Role="ShopRegistration" Type="Self.ShopRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShopRegistration">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Store_StoreGroup">
+          <End Role="StoreGroup" Type="Self.StoreGroup" Multiplicity="1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoreGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="StoreGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoreRegistration_Store">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="StoreRegistration" Type="Self.StoreRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StoreRegistration">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InStoreCollectionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CollectionPoints" EntityType="Self.CollectionPoint" />
+          <EntitySet Name="DeviceInfoes" EntityType="Self.DeviceInfo" />
+          <EntitySet Name="Parcels" EntityType="Self.Parcel" />
+          <EntitySet Name="ParcelGroups" EntityType="Self.ParcelGroup" />
+          <EntitySet Name="Shops" EntityType="Self.Shop" />
+          <EntitySet Name="ShopRegistrations" EntityType="Self.ShopRegistration" />
+          <EntitySet Name="Stores" EntityType="Self.Store" />
+          <EntitySet Name="StoreGroups" EntityType="Self.StoreGroup" />
+          <EntitySet Name="StoreRegistrations" EntityType="Self.StoreRegistration" />
+          <AssociationSet Name="FK_ParcelGroup_CollectionPoint" Association="Self.FK_ParcelGroup_CollectionPoint">
+            <End Role="CollectionPoint" EntitySet="CollectionPoints" />
+            <End Role="ParcelGroup" EntitySet="ParcelGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_CollectionPoint" Association="Self.FK_Shop_CollectionPoint">
+            <End Role="CollectionPoint" EntitySet="CollectionPoints" />
+            <End Role="Shop" EntitySet="Shops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Store_CollectionPoint" Association="Self.FK_Store_CollectionPoint">
+            <End Role="CollectionPoint" EntitySet="CollectionPoints" />
+            <End Role="Store" EntitySet="Stores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopRegistration_DeviceInfo" Association="Self.FK_ShopRegistration_DeviceInfo">
+            <End Role="DeviceInfo" EntitySet="DeviceInfoes" />
+            <End Role="ShopRegistration" EntitySet="ShopRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoreRegistration_DeviceInfo" Association="Self.FK_StoreRegistration_DeviceInfo">
+            <End Role="DeviceInfo" EntitySet="DeviceInfoes" />
+            <End Role="StoreRegistration" EntitySet="StoreRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parcels_ParcelGroup" Association="Self.FK_Parcels_ParcelGroup">
+            <End Role="ParcelGroup" EntitySet="ParcelGroups" />
+            <End Role="Parcel" EntitySet="Parcels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopRegistration_Shop" Association="Self.FK_ShopRegistration_Shop">
+            <End Role="Shop" EntitySet="Shops" />
+            <End Role="ShopRegistration" EntitySet="ShopRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Store_StoreGroup" Association="Self.FK_Store_StoreGroup">
+            <End Role="StoreGroup" EntitySet="StoreGroups" />
+            <End Role="Store" EntitySet="Stores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoreRegistration_Store" Association="Self.FK_StoreRegistration_Store">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="StoreRegistration" EntitySet="StoreRegistrations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InStoreCollectionModelStoreContainer" CdmEntityContainer="InStoreCollectionEntities">
+          <EntitySetMapping Name="CollectionPoints">
+            <EntityTypeMapping TypeName="InStoreCollectionModel.CollectionPoint">
+              <MappingFragment StoreEntitySet="CollectionPoint">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Latitiude" ColumnName="Latitiude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceInfoes">
+            <EntityTypeMapping TypeName="InStoreCollectionModel.DeviceInfo">
+              <MappingFragment StoreEntitySet="DeviceInfo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Platform" ColumnName="Platform" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="AppVersion" ColumnName="AppVersion" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parcels">
+            <EntityTypeMapping TypeName="InStoreCollectionModel.Parcel">
+              <MappingFragment StoreEntitySet="Parcel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParcelGroupId" ColumnName="ParcelGroupId" />
+                <ScalarProperty Name="DateScannedIntoStore" ColumnName="DateScannedIntoStore" />
+                <ScalarProperty Name="DateCollectedByCustomer" ColumnName="DateCollectedByCustomer" />
+                <ScalarProperty Name="DateReturnedToStore" ColumnName="DateReturnedToStore" />
+                <ScalarProperty Name="TrackingNumber" ColumnName="TrackingNumber" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CollectionType" ColumnName="CollectionType" />
+                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+                <ScalarProperty Name="ParcelNumber" ColumnName="ParcelNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParcelGroups">
+            <EntityTypeMapping TypeName="InStoreCollectionModel.ParcelGroup">
+              <MappingFragment StoreEntitySet="ParcelGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CollectionPointId" ColumnName="CollectionPointId" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="PersonPhone" ColumnName="PersonPhone" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="AgeInHours" ColumnName="AgeInHours" />
+                <ScalarProperty Name="IsMobilePhoneNumber" ColumnName="IsMobilePhoneNumber" />
+                <ScalarProperty Name="Pin" ColumnName="Pin" />
+                <ScalarProperty Name="CustomerReference" ColumnName="CustomerReference" />
+                <ScalarProperty Name="ParcelCount" ColumnName="ParcelCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shops">
+            <EntityTypeMapping TypeName="InStoreCollectionModel.Shop">
+              <MappingFragment StoreEntitySet="Shop">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="CollectionPointId" ColumnName="CollectionPointId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShopRegistrations">
+            <EntityTypeMapping TypeName="InStoreCollectionModel.ShopRegistration">
+              <MappingFragment StoreEntitySet="ShopRegistration">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Latitiude" ColumnName="Latitiude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="InStoreCollectionModel.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StoreGroupId" ColumnName="StoreGroupId" />
+                <ScalarProperty Name="StoreCode" ColumnName="StoreCode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="CollectionPointId" ColumnName="CollectionPointId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoreGroups">
+            <EntityTypeMapping TypeName="InStoreCollectionModel.StoreGroup">
+              <MappingFragment StoreEntitySet="StoreGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StoreGroupCode" ColumnName="StoreGroupCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoreRegistrations">
+            <EntityTypeMapping TypeName="InStoreCollectionModel.StoreRegistration">
+              <MappingFragment StoreEntitySet="StoreRegistration">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
